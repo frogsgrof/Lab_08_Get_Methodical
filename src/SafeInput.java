@@ -8,17 +8,16 @@ public class SafeInput {
      * @param prompt prompt for the user
      * @return a String response that is not zero length
      */
-    public static String getNonZeroLenString(Scanner pipe, String prompt)
-    {
+    public static String getNonZeroLenString(Scanner pipe, String prompt) {
+
         String retString = "";  // Set this to zero length. Loop runs until it isn’t
         do
         {
             System.out.print("\n" + prompt + ": "); // show prompt add space
             retString = pipe.nextLine();
-        }while(retString.length() == 0);
+        } while (retString.length() == 0);
 
         return retString;
-
     }
 
 
@@ -101,7 +100,7 @@ public class SafeInput {
         // loop
         do {
             // prompt user
-            System.out.print("\n" + prompt + " (ACCEPTED RANGE: " + low + " - " + high + "): ");
+            System.out.print("\n" + prompt + " (" + low + " - " + high + "): ");
 
             // initial check for integer
             if (pipe.hasNextInt()) {
@@ -151,7 +150,7 @@ public class SafeInput {
         // loop
         do {
             // prompt user
-            System.out.print("\n" + prompt + " (ACCEPTED RANGE: " + low + " - " + high + "): ");
+            System.out.print("\n" + prompt + " (" + low + " - " + high + "): ");
 
             // initial check for double
             if (pipe.hasNextDouble()) {
@@ -191,39 +190,36 @@ public class SafeInput {
      */
     public static boolean getYNConfirm(Scanner pipe, String prompt) {
 
-        String tempInput; // stores input that is 1 character, to be tested for YyNn
+        String inputString; // stores input
         boolean retBool = false; // stores yes/no answer as boolean to be returned
         boolean validInput = false; // loop ender
-        String trash; // stores bad input
 
         do {
-            // prompt user
-            System.out.print("\n" + prompt);
+            System.out.print("\n" + prompt + "\n"); // prompt user
+            inputString = pipe.next(); // store input
+            pipe.nextLine(); // clear pipe
 
-            if (pipe.next().length() == 1) {
-                tempInput = pipe.nextLine(); // if input is 1 character, store it
-                pipe.nextLine(); // clear pipe
+            // if it is one character:
+            if (inputString.length() == 1) {
 
-                // proceed to check what the answer is
-                if (tempInput.equalsIgnoreCase("Y")) { // if answer is yes
+                // proceed to check what the answer is.
+                if (inputString.equalsIgnoreCase("Y")) { // if answer is yes
                     retBool = true; // return variable set to true
                     validInput = true; // end loop
 
-                } else if (tempInput.equalsIgnoreCase("N")) { // if answer is no
+                } else if (inputString.equalsIgnoreCase("N")) { // if answer is no
                     // return variable is already set to false
                     validInput = true; // end loop
 
                 } else { // if not yes and not no
-                    System.out.println("ERROR: '" + tempInput + "' could not be understood. (Enter Y or N."); // print error
+                    System.out.println("ERROR: '" + inputString + "' could not be understood. (Enter Y or N.)"); // print error
                 }
 
             } else { // if fails char test
-                trash = pipe.nextLine(); // store trash
-                System.out.println("ERROR: '" + trash + "' is too long."); // print error
+                System.out.println("ERROR: '" + inputString + "' is too long."); // print error
             }
 
         } while (!validInput);
-
 
         return retBool;
     }
