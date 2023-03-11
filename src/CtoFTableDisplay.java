@@ -55,6 +55,5 @@ public class CtoFTableDisplay {
         for (int i = 0; i < 66; i++) {
             System.out.print("*");
         }
-
     }
 }
