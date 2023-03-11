@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class SafeInput {
 
@@ -232,26 +233,28 @@ public class SafeInput {
      * @return input String that matches the RegEx pattern
      */
     public static String getRegExString(Scanner pipe, String prompt, String regEx) {
-        boolean validInput = false; // loop ender
         String retString; // stores input
+        boolean matchFound; // loop ender
 
         do {
             System.out.print("\n" + prompt + ":\n"); // print prompt
+            retString = pipe.next(); // store input
             pipe.nextLine(); // clear pipe
 
-            // store input
-            retString = pipe.next();
-            pipe.nextLine(); // clear pipe
+            /*
+            take the String version of a regex pattern that was passed into the method & turn it into
+            an actual regex pattern.
+            within the same statement, check if it matches the string collected from the user.
+            end loop and return that match if it does.
+             */
+            matchFound = Pattern.compile(regEx).matcher(retString).matches();
 
-            // if matches, store in return variable & end loop
-            if (retString.matches(regEx)) {
-                validInput = true;
-
-            } else { // if it doesn't match:
-                System.out.println("ERROR: '" + retString + "' is not in the correct format."); // print error
+            // if it doesn't match, print error.
+            if (!matchFound) {
+                System.out.print("Error: '" + retString + "' is in the wrong format.\n");
             }
 
-        } while (!validInput);
+        } while (!matchFound);
 
         return retString;
     }
