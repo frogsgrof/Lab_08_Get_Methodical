@@ -10,10 +10,10 @@ public class SafeInput {
      */
     public static String getNonZeroLenString(Scanner pipe, String prompt) {
 
-        String retString = "";  // Set this to zero length. Loop runs until it isn’t
+        String retString;  // Set this to zero length. Loop runs until it isn’t
         do
         {
-            System.out.print("\n" + prompt + ": "); // show prompt add space
+            System.out.print("\n" + prompt + ":\n"); // show prompt add space
             retString = pipe.nextLine();
         } while (retString.length() == 0);
 
@@ -100,7 +100,7 @@ public class SafeInput {
         // loop
         do {
             // prompt user
-            System.out.print("\n" + prompt + " (" + low + " - " + high + "): ");
+            System.out.print("\n" + prompt + " (" + low + " - " + high + "):\n");
 
             // initial check for integer
             if (pipe.hasNextInt()) {
@@ -233,30 +233,95 @@ public class SafeInput {
      */
     public static String getRegExString(Scanner pipe, String prompt, String regEx) {
         boolean validInput = false; // loop ender
-        String tempString; // stores input not yet tested
-        String retString = ""; // stores final input
-        String trash; // stores bad input
+        String retString; // stores input
 
         do {
-            // print prompt
-            System.out.print("\n" + prompt + ": ");
+            System.out.print("\n" + prompt + ":\n"); // print prompt
+            pipe.nextLine(); // clear pipe
 
             // store input
-            tempString = pipe.nextLine();
+            retString = pipe.next();
             pipe.nextLine(); // clear pipe
 
             // if matches, store in return variable & end loop
-            if (tempString.matches(regEx)) {
-                tempString = retString;
+            if (retString.matches(regEx)) {
                 validInput = true;
 
             } else { // if it doesn't match:
-                trash = pipe.nextLine(); // store trash
-                System.out.println("ERROR: '" + trash + "' is not in the correct format."); // print error
+                System.out.println("ERROR: '" + retString + "' is not in the correct format."); // print error
             }
 
         } while (!validInput);
 
         return retString;
+    }
+
+
+    /**
+     * prints a given message centered within a lovely header (max width is 60 characters)
+     *
+     * @param msg the message to be displayed in the header
+     */
+    public static void prettyHeader(String msg) {
+
+        // top line
+        for (int i = 0; i < 66; i++) {
+            System.out.print("*");
+        }
+
+        // skip a line
+        System.out.println();
+
+        // 3 asterisks on left end
+        for (int i = 0; i < 3; i++) {
+            System.out.print("*");
+        }
+
+        /*
+        loop over length of white space on left, printing spaces.
+        the total amount of white space is 60 minus the length of the message.
+        if you divide that by 2, you get the amount of white space on the left.
+        however, java always rounds down when dividing ints, so if the message length is odd,
+        we need to add 1 extra space to the right side.
+         */
+
+        // print left side spaces:
+        for (int i = 0; i < (60 - msg.length()) / 2; i++) {
+            System.out.print(" ");
+        }
+
+        // print message
+        System.out.print(msg);
+
+        // check if the message length is odd or even
+        if (msg.length() % 2 == 0) {
+
+            // if it is even, print the same number of spaces as before.
+            for (int i = 0; i < (60 - msg.length()) / 2; i++) {
+                System.out.print(" ");
+            }
+        } else {
+
+            // if it is odd, add 1 to the middle argument in the for loop
+            for (int i = 0; i < ((60 - msg.length()) / 2) + 1; i++) {
+                System.out.print(" ");
+            }
+        }
+
+        // 3 asterisks on right
+        for (int i = 0; i < 3; i++) {
+            System.out.print("*");
+        }
+
+        // skip a line
+        System.out.println();
+
+        // bottom line
+        for (int i = 0; i < 66; i++) {
+            System.out.print("*");
+        }
+
+        // skip a line at the end
+        System.out.println();
     }
 }

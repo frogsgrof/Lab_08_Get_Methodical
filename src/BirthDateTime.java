@@ -43,6 +43,6 @@ public class BirthDateTime {
         int minute = SafeInput.getRangedInt(in, "Minute", 1, 59);
 
         // print results
-        System.out.printf("You were born on %02d/%02d/%d at %d:%02d", month, day, year, hour, minute);
+        System.out.printf("\nYou were born on %02d/%02d/%d at %d:%02d.", month, day, year, hour, minute);
     }
 }
